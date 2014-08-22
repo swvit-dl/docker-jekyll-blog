@@ -9,11 +9,12 @@ RUN add-apt-repository ppa:chris-lea/node.js && \
 		apt-get install -y nodejs
 
 WORKDIR /opt
+RUN gem install jekyll
+
+RUN cd /opt && jekyll new blog
 ADD ./blog /opt/blog
 
-RUN cd /opt/blog
-RUN gem install jekyll
-RUN jekyll new blog && \
-		cd blog
- 
+EXPOSE 4000
+
+WORKDIR /opt/blog
 CMD ["jekyll", "serve"]
